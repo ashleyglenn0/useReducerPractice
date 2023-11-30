@@ -1,10 +1,11 @@
+import {Paper} from "@mui/material";
 import CreditCardForm from "./creditCardForm";
 
 function App() {
   return (
-    <div>
-     <CreditCardForm />
-    </div>
+    <Paper>
+      <CreditCardForm />
+    </Paper>
   );
 }
 
