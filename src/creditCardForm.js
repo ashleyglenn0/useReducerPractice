@@ -36,7 +36,6 @@ function CreditCardForm() {
     const handleSubmit = useCallback(e => {
         e.preventDefault();
         dispatch({type: ACTIONS.HANDLE_SUBMIT, payload: {...state}})
-        console.log("SUBMIT HAS HAPPENED")
     }, [state]);
 
     const handleTextChange = useCallback(e => {
@@ -48,8 +47,7 @@ function CreditCardForm() {
     }, [])
 
     wallet.push(state)
-
-    
+ 
   return (
    <div>
     <Grid container spacing={3}>
