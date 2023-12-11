@@ -4,8 +4,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
 export const ACTIONS = {
-    HANDLE_FIELD_CHANGES: "handle-field-changes",
-    HANDLE_SUBMIT: "handle-submit"
+    HANDLE_FIELD_CHANGES: "handle field changes",
+    HANDLE_SUBMIT: "handle submit"
 }
 
 function reducer(state, action) {
@@ -32,23 +32,22 @@ const initialState = {
 function CreditCardForm() {
     const wallet = [];
     const [state, dispatch] = useReducer(reducer, initialState);
-
-    const {nameOnCard, zipCode, cardVerificationValue, expirationDate, cardNumber, id} = state;
  
-    const handleSubmit = useCallback((e) => {
+    const handleSubmit = useCallback(e => {
         e.preventDefault();
-        dispatch({type: ACTIONS.HANDLE_SUBMIT, payload: {
-            nameOnCard,
-            zipCode,
-            cardVerificationValue,
-            expirationDate,
-            cardNumber,
-            id
-        }})
-    }, [nameOnCard, zipCode, cardVerificationValue, expirationDate, cardNumber, id])
+        dispatch({type: ACTIONS.HANDLE_SUBMIT, payload: {...state}})
+        console.log("SUBMIT HAS HAPPENED")
+    }, [state]);
 
-    wallet.push(state);
-    console.log("????WALLETCONTENTS", wallet)
+    const handleTextChange = useCallback(e => {
+        dispatch({
+            type: ACTIONS.HANDLE_FIELD_CHANGES,
+            fieldName: e.target.name,
+            payload: e.target.value
+        })
+    }, [])
+
+    wallet.push(state)
 
     
   return (
@@ -58,59 +57,44 @@ function CreditCardForm() {
             <TextField 
             fullWidth 
             label="Card Number"
-            value={cardNumber}
-            onChange={(e) => dispatch({
-                type: ACTIONS.HANDLE_FIELD_CHANGES,
-                fieldName: "cardNumber",
-                payload: e.currentTarget.value
-            })}/>
+            value={state.cardNumber}
+            name="cardNumber"
+            onChange={handleTextChange}/>
         </Grid>
         <Grid item sm={4}>
             <TextField 
             fullWidth 
             label="Expiration Date"
-            value={expirationDate}
-            onChange={(e) => dispatch({
-                type: ACTIONS.HANDLE_FIELD_CHANGES,
-                fieldName: "expirationDate",
-                payload: e.currentTarget.value
-            })}
+            value={state.expirationDate}
+            name="expirationDate"
+            onChange={handleTextChange}
             />
         </Grid>
         <Grid item sm={4}>
             <TextField 
             fullWidth 
             label="Card Verification"
-            value={cardVerificationValue}
-            onChange={(e) => dispatch({
-                type: ACTIONS.HANDLE_FIELD_CHANGES,
-                fieldName: "cardVerificationValue",
-                payload: e.currentTarget.value
-            })}
+            value={state.cardVerificationValue}
+            name="cardVerificationValue"
+            onChange={handleTextChange}
            />
         </Grid>
         <Grid item sm={4}>
             <TextField 
             fullWidth 
             label="Billing Zip Code"
-            value={zipCode}
-            onChange={(e) => dispatch({
-                type: ACTIONS.HANDLE_FIELD_CHANGES,
-                fieldName: "zipCode",
-                payload: e.currentTarget.value
-            })}
+            value={state.zipCode}
+            name="zipCode"
+            onChange={handleTextChange}
            />
         </Grid>
         <Grid item sm={4}>
             <TextField 
             fullWidth 
             label="Name on Card"
-            value={nameOnCard}
-            onChange={(e) => dispatch({
-                type: ACTIONS.HANDLE_FIELD_CHANGES,
-                fieldName: "nameOnCard",
-                payload: e.currentTarget.value
-            })}
+            value={state.nameOnCard}
+            name="nameOnCard"
+            onChange={handleTextChange}
             />
         </Grid>
         <Grid item xs={12}>
